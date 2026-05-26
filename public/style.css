@@ -98,12 +98,13 @@ h1 {
 .simbolo {
     width: 50px;
     height: 50px; 
-    background-image: url('./public/img/cifra.png');
+    
+    /* ALTERE ESTA LINHA ABAIXO */
+    background-image: url('img/cifra.png'); 
+    
     background-size: 500% 500%; 
     background-repeat: no-repeat;
-    
-    /* ADICIONE ESTA LINHA AQUI POR SEGURANÇA TAMBÉM */
-    flex-shrink: 0; /* Impede que o Flexbox encolha o símbolo interno */
+    flex-shrink: 0;
 }
 
 .espaco {
