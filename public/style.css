@@ -1,0 +1,112 @@
+body {
+    font-family: sans-serif;
+    background-color: #222; /* Fundo escuro para destacar o branco da cifra */
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.output-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 15px;
+    background-color: #eee; /* Fundo claro para contraste da imagem */
+    border-radius: 8px;
+    min-height: 100px;
+}
+
+/* A Máscara: Ela tem a altura reduzida para "cortar" a parte de baixo */
+.mascara-simbolo {
+    width: 50px;
+    height: 35px; /* Ajuste aqui! É essa altura que vai degolar a letra embaixo do símbolo */
+    overflow: hidden; /* O segredo está aqui: esconde o que não couber na altura */
+    margin-bottom: 5px; /* Dá um respiro entre as linhas */
+}
+
+/* O Símbolo: Volta a ser um quadrado perfeito de 50x50 para a matemática de 500% não bugar */
+.simbolo {
+    width: 50px;
+    height: 50px; 
+    background-image: url('./img/cifra.png');
+    background-size: 500% 500%; 
+    background-repeat: no-repeat;
+}
+
+.espaco {
+    width: 30px; /* Largura do espaço entre as palavras */
+    height: 35px; /* Mesma altura da sua máscara */
+    flex-shrink: 0; /* Proíbe o Flexbox de esmagar o espaço */
+}
+
+.quebra-linha {
+    width: 100%; /* Ocupa 100% da largura, empurrando o resto para baixo */
+    height: 15px; /* Altura do espaço entre uma linha e outra */
+}
+
+.chat-box {
+    background-color: #fff;
+    height: 400px;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    overflow-y: auto; /* Cria barra de rolagem se houver muitas mensagens */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #ccc;
+}
+
+.mensagem {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+    align-self: flex-start; /* Alinha à esquerda */
+    max-width: 80%;
+}
+
+.conteudo-simbolos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.conteudo-texto {
+    font-size: 18px;
+    color: #333;
+}
+
+.controles {
+    display: flex;
+    gap: 10px;
+}
+
+.controles input {
+    flex-grow: 1;
+}
+
+button {
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+button.ativo {
+    background-color: #007bff; /* Cor diferente quando está traduzindo */
+}
