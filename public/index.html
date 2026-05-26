@@ -10,12 +10,22 @@
     <div class="container">
         <h1>Conexão Criptografada</h1>
         
-        <div id="chatBox" class="chat-box"></div>
-        
-        <div class="controles">
-            <input type="text" id="inputText" placeholder="Digite sua mensagem...">
-            <button id="btnEnviar">Enviar</button>
-            <button id="btnTraduzir">Traduzir Tudo</button>
+        <div id="telaAcesso" class="tela-acesso">
+            <p>Digite o nome de uma sala secreta para entrar:</p>
+            <input type="text" id="inputSala" placeholder="Ex: projeto-x">
+            <button id="btnEntrar">Entrar na Sala</button>
+        </div>
+
+        <div id="telaChat" style="display: none;">
+            <p id="infoSala" style="text-align: center; color: #666; margin-bottom: 10px;"></p>
+            
+            <div id="chatBox" class="chat-box"></div>
+            
+            <div class="controles">
+                <input type="text" id="inputText" placeholder="Digite sua mensagem...">
+                <button id="btnEnviar">Enviar</button>
+                <button id="btnTraduzir">Traduzir Tudo</button>
+            </div>
         </div>
     </div>
 

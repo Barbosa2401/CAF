@@ -6,16 +6,21 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Diz ao servidor para expor tudo que está na pasta 'public' ao navegador
+// Expõe os arquivos da pasta public
 app.use(express.static('public'));
 
-// Gerencia as conexões do WebSocket (quando alguém abre o site)
 io.on('connection', (socket) => {
-    console.log('Um usuário secreto se conectou:', socket.id);
+    console.log('Usuário conectou:', socket.id);
 
-    // Quando o servidor recebe uma mensagem, ele retransmite para TODOS
-    socket.on('enviar_mensagem', (msg) => {
-        io.emit('receber_mensagem', msg); 
+    // Recebe o pedido do usuário para entrar em uma sala
+    socket.on('entrar_sala', (nomeDaSala) => {
+        socket.join(nomeDaSala);
+        console.log(`Usuário ${socket.id} entrou na sala: ${nomeDaSala}`);
+    });
+
+    // Recebe a mensagem e envia APENAS para quem está na mesma sala
+    socket.on('enviar_mensagem', (dados) => {
+        io.to(dados.sala).emit('receber_mensagem', dados.texto); 
     });
 
     socket.on('disconnect', () => {
@@ -23,9 +28,8 @@ io.on('connection', (socket) => {
     });
 });
 
-// O servidor tenta pegar a porta da nuvem, se não achar, usa a 3000 (para testes locais)
+// Porta dinâmica para funcionar na nuvem (Render) ou localmente na 3000
 const PORT = process.env.PORT || 3000;
-
 server.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
