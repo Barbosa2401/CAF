@@ -83,20 +83,27 @@ h1 {
     letter-spacing: 1px;
 }
 
-/* --- A MÁGICA DOS SÍMBOLOS (SPRITES) --- */
+/* ... encontre esta classe no seu CSS ... */
 .mascara-simbolo {
     width: 50px;
-    height: 35px; /* Altura reduzida para cortar a letra de baixo */
-    overflow: hidden; /* Esconde o que passar dos 35px de altura */
+    height: 35px;
+    overflow: hidden;
     margin-bottom: 5px;
+    
+    /* ADICIONE ESTA LINHA AQUI */
+    flex-shrink: 0; /* Impede que o Flexbox encolha a 'janela' do símbolo */
 }
 
+/* ... encontre esta classe também ... */
 .simbolo {
     width: 50px;
-    height: 50px; /* Mantém 50x50 para a matemática do sprite funcionar */
+    height: 50px; 
     background-image: url('./public/img/cifra.png');
     background-size: 500% 500%; 
     background-repeat: no-repeat;
+    
+    /* ADICIONE ESTA LINHA AQUI POR SEGURANÇA TAMBÉM */
+    flex-shrink: 0; /* Impede que o Flexbox encolha o símbolo interno */
 }
 
 .espaco {
@@ -146,4 +153,19 @@ button.ativo {
 }
 button.ativo:hover {
     background-color: #0056b3;
+}
+
+/* Etiqueta com o nome de quem mandou */
+.nome-autor {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Formatação especial para as SUAS mensagens */
+.minha-mensagem {
+    background-color: #d1f5d3; /* Um verde bem clarinho */
+    align-self: flex-end; /* Joga a sua mensagem para a direita da tela */
+    box-shadow: 0 2px 4px rgba(0, 100, 0, 0.1);
 }

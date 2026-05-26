@@ -18,9 +18,10 @@ io.on('connection', (socket) => {
         console.log(`Usuário ${socket.id} entrou na sala: ${nomeDaSala}`);
     });
 
-    // Recebe a mensagem e envia APENAS para quem está na mesma sala
+    // Substitua este bloco no seu server.js
     socket.on('enviar_mensagem', (dados) => {
-        io.to(dados.sala).emit('receber_mensagem', dados.texto); 
+        // Agora 'dados' contém: sala, texto e o AUTOR. O servidor repassa tudo.
+        io.to(dados.sala).emit('receber_mensagem', dados); 
     });
 
     socket.on('disconnect', () => {

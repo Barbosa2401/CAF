@@ -1,6 +1,7 @@
 const socket = io();
 
 // Elementos da Tela de Acesso
+const inputNome = document.getElementById('inputNome');
 const telaAcesso = document.getElementById('telaAcesso');
 const telaChat = document.getElementById('telaChat');
 const inputSala = document.getElementById('inputSala');
@@ -15,6 +16,7 @@ const btnTraduzir = document.getElementById('btnTraduzir');
 
 let modoTraduzido = false;
 let salaAtual = ''; 
+let meuNome = ''; // Vai guardar o nome que você digitar
 
 // Dicionário de Coordenadas (Coluna, Linha)
 const coordsCifra = {
@@ -27,15 +29,21 @@ const coordsCifra = {
 
 // --- LÓGICA DE ACESSO ---
 btnEntrar.addEventListener('click', () => {
+    const nomeUsuario = inputNome.value.trim();
     const nomeSala = inputSala.value.trim().toLowerCase();
     
-    if (nomeSala !== '') {
+    // Agora obriga a preencher os DOIS campos
+    if (nomeSala !== '' && nomeUsuario !== '') {
         salaAtual = nomeSala;
+        meuNome = nomeUsuario; // Salva o nome na memória
+        
         socket.emit('entrar_sala', salaAtual);
         
         telaAcesso.style.display = 'none';
         telaChat.style.display = 'block';
-        infoSala.textContent = `Você está na sala secreta: ${salaAtual}`;
+        infoSala.textContent = `Sala secreta: ${salaAtual} | Operador: ${meuNome}`;
+    } else {
+        alert("Por favor, preencha seu nome e o nome da sala!");
     }
 });
 
@@ -49,7 +57,8 @@ btnEnviar.addEventListener('click', () => {
     if (texto.trim() !== '') {
         socket.emit('enviar_mensagem', {
             sala: salaAtual,
-            texto: texto
+            texto: texto,
+            autor: meuNome // MANDANDO SEU NOME JUNTO COM A MENSAGEM
         }); 
         inputText.value = '';
     }
@@ -60,17 +69,30 @@ inputText.addEventListener('keypress', (e) => {
 });
 
 // --- LÓGICA DE RECEBIMENTO ---
-socket.on('receber_mensagem', (msg) => {
-    const balaoMensagem = criarBalaoDeMensagem(msg);
+socket.on('receber_mensagem', (dados) => {
+    // Agora passamos o texto E o autor para a função
+    const balaoMensagem = criarBalaoDeMensagem(dados.texto, dados.autor);
     chatBox.appendChild(balaoMensagem);
-    chatBox.scrollTop = chatBox.scrollHeight; // Rola para a última mensagem
+    chatBox.scrollTop = chatBox.scrollHeight; 
 });
 
 // --- CONSTRUTOR VISUAL DA MENSAGEM ---
-function criarBalaoDeMensagem(texto) {
+function criarBalaoDeMensagem(texto, autor) {
     const divMensagem = document.createElement('div');
     divMensagem.classList.add('mensagem');
 
+    // Se a mensagem for minha, aplica a classe CSS para jogar para a direita
+    if (autor === meuNome) {
+        divMensagem.classList.add('minha-mensagem');
+    }
+
+    // Cria a etiqueta com o nome do autor em cima da mensagem
+    const divAutor = document.createElement('div');
+    divAutor.classList.add('nome-autor');
+    divAutor.textContent = autor;
+    divMensagem.appendChild(divAutor);
+
+    // Cria os containers de símbolos e textos (seu código original continua aqui)
     const divSimbolos = document.createElement('div');
     divSimbolos.classList.add('conteudo-simbolos');
     
